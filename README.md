@@ -55,6 +55,10 @@ Unfortunately Postfix doesn't have a way (that I know of) to record the director
 
 ## FAQ
 
+**Q:** There a minified version I can paste into the shell?
+
+**A:** I'll get to that after my nap.
+
 **Q:** Can I have this without the stupid emojis?
 
 **A:**
