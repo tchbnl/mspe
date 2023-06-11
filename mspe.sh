@@ -1,7 +1,7 @@
 #!/bin/bash
 # mspe - MSP-like tool for Postfix servers
 # Nathan Paton <me@tchbnl.net>
-# v0.1 (Updated 5/28/23)
+# v0.1 (Updated 6/11/23)
 
 # Nice text formatting
 TEXT_BOLD="\e[1m"
@@ -21,7 +21,7 @@ Without arguments (except --rotated) mspe fetches mail server stats from the cur
 }
 
 # Version information
-VERSION="${TEXT_BOLD}mspe${TEXT_RESET} v0.1 (Updated 5/28/23)"
+VERSION="${TEXT_BOLD}mspe${TEXT_RESET} v0.1 (Updated 6/11/23)"
 
 # Mail queue and log stats
 # This is the equivalent of msp.pl --auth
@@ -77,9 +77,15 @@ check_rbls() {
         # ... and loop further into checking each RBL
         for RBL in "${RBLS[@]}"; do
             # Check the IP against the DNS RBL and variablize it for after
-            # It took me a while to realize I needed to reverse the IP. I never
-            # said I was smart this is written in Bash.
-            RESULT="$(dig +short "$(echo "${IP}" | rev)"."${RBL}")"
+            # It took me a while to realize I needed to reverse the IP _order_. I
+            # never said I was smart this is written in Bash.
+            # Yes _order_ was realized much later. I'm sorry.
+            # Note: Spamhaus will fail if looksup are done with an open resolver
+            # (think 1.1.1.1 and 8.8.8.8). Make sure your host's internal resolver
+            # is at the top of your resolve.conf.
+            # TODO: IPv6 support
+            # TODO: Open resolver error check (especially for Spamhaus)
+            RESULT="$(dig +short "$(echo "${IP}" | awk -F '.' '{print $4 "." $3 "." $2 "." $1}')"."${RBL}")"
 
             # And there it is. Empty response means we're good.
             if [[ -z "${RESULT}" ]]; then
