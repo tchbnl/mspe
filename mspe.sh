@@ -15,10 +15,10 @@ show_help() {
     echo -e "${TEXT_BOLD}mspe${TEXT_RESET} is an MSP-like tool for Postfix servers.
 
 USAGE: mspe [--rotated|--rbl]
-    --rotated                   Check rotated maillog files as well when fetching stats
-    --rbl                       Check server IPs against common RBLs (no stats check)
-    -h --help                   Show this message and exit
-    -v --version                Show version information and exit
+    --rotated                   Check rotated maillog files as well when fetching stats.
+    --rbl                       Check server IPs against common RBLs (no stats check).
+    -h --help                   Show this message and exit.
+    -v --version                Show version information and exit.
 
 Without arguments (except --rotated) mspe fetches mail server stats from the current maillog (like msp.pl --auth)."
 }
