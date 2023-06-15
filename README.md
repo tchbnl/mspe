@@ -1,5 +1,4 @@
 **mspe** is an [MSP](https://github.com/CpanelInc/tech-MSP)-like tool for Postfix servers.
-
 ```
 # mspe --rotated
 Fetching mail server stats...
@@ -36,7 +35,6 @@ Checking IPs in RBLs...
 It recreates the most useful (IMO) features from MSP, like showing the full mail server stats and checking server IPs against RBLs. In the future I might add support to output important config values also.
 
 ## Email Subjects in the Postfix maillog
-
 Postifx doesn't record the email subject by default in its log. You'll need to add an include in the config for this.
 
 1. Uncomment or add this to the Postfix `main.cf` file:
@@ -54,7 +52,6 @@ header_checks = regexp:/etc/postfix/header_checks
 Unfortunately Postfix doesn't have a way (that I know of) to record the directory an email was sent out of (like Exim's `cwd`).
 
 ## FAQ
-
 **Q:** There a minified version I can paste into the shell?
 
 **A:** ~~I'll get to that after my nap.~~ It's done!

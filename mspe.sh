@@ -1,7 +1,10 @@
 #!/bin/bash
 # mspe - MSP-like tool for Postfix servers
 # Nathan Paton <me@tchbnl.net>
-# v0.1 (Updated 6/11/23)
+# v0.1 (Updated 6/15/23)
+
+# Unset in case this is for .min.sh
+unset USE_ROTATED
 
 # Nice text formatting
 TEXT_BOLD="\e[1m"
@@ -21,7 +24,7 @@ Without arguments (except --rotated) mspe fetches mail server stats from the cur
 }
 
 # Version information
-VERSION="${TEXT_BOLD}mspe${TEXT_RESET} v0.1 (Updated 6/11/23)"
+VERSION="${TEXT_BOLD}mspe${TEXT_RESET} v0.1 (Updated 6/15/23)"
 
 # Mail queue and log stats
 # This is the equivalent of msp.pl --auth
@@ -29,9 +32,9 @@ check_stats() {
     echo -e "Fetching mail server stats...\n"
 
     # If --rotated is used, we search both the current and rotated maillogs
-    # We also want to advise that this could take some time for a larger server
+    # We limit rotated lookup to five logs max in case these are big big
     if [[ "${USE_ROTATED}" = true ]]; then
-        LOG_FILE=(/var/log/maillog /var/log/maillog-*)
+        readarray -t LOG_FILE < <(find /var/log -type f -name "maillog" -o -name "maillog-*" | sort | head -n 4)
     else
         LOG_FILE=(/var/log/maillog)
     fi
